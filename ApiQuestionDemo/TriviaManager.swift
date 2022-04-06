@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 class TriviaManager: ObservableObject {
-    private(set) var trivia: [Trivia.Results] = []
+    private(set) var trivia: [Trivia.Result] = []
     @Published private(set) var length = 0
     @Published private(set) var index = 0
     @Published private(set) var reachedEnd = false
@@ -36,7 +36,7 @@ class TriviaManager: ObservableObject {
             guard (response as? HTTPURLResponse)?.statusCode == 200 else { fatalError("Error while fetching data") }
             
             let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            //decoder.keyDecodingStrategy = .convertFromSnakeCase
             let decodedData = try decoder.decode(Trivia.self, from: data)
             
             DispatchQueue.main.async {

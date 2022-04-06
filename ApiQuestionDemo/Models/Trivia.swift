@@ -8,9 +8,9 @@
 import Foundation
 
 struct Trivia: Decodable {
-    var results: [Results]
+    var results: [Result]
     
-    struct Results: Decodable, Identifiable {
+    struct Result: Decodable, Identifiable {
         var id: UUID {
             UUID()
         }
