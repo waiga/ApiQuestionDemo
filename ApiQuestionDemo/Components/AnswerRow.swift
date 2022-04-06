@@ -10,6 +10,7 @@ import SwiftUI
 struct AnswerRow: View {
     var answer: Answer
     @State private var isSelected = false
+    @EnvironmentObject var triviaManager: TriviaManager
     
     var green = Color(red: 0.51, green: 0.98, blue: 0.72)
     //Color(hue: 0.637, saturation: 0.711, brightness: 0.511)
@@ -19,8 +20,10 @@ struct AnswerRow: View {
         HStack(spacing: 20) {
             Image(systemName: "circle.fill")
                 .font(.caption)
+            
             Text(answer.text)
                 .bold()
+            
             if isSelected {
                 Spacer()
                 
@@ -31,12 +34,15 @@ struct AnswerRow: View {
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .foregroundColor(isSelected ? Color("AccentColor") : .gray)
+        .foregroundColor(triviaManager.answerSelected ? (isSelected ? Color("AccentColor") : .gray) : Color("AccentColor"))
         .background(.white)
         .cornerRadius(10)
         .shadow(color: isSelected ? (answer.isCorrect ? green : red) : .gray, radius: 5, x: 0.5, y: 0.5)
         .onTapGesture {
-           isSelected = true
+            if !triviaManager.answerSelected {
+                isSelected = true
+                triviaManager.selectAnswer(answer: answer)
+            }
         }
     }
 }
@@ -44,5 +50,6 @@ struct AnswerRow: View {
 struct AnswerRow_Previews: PreviewProvider {
     static var previews: some View {
         AnswerRow(answer: Answer(text: "Test", isCorrect: false))
+            .environmentObject(TriviaManager())
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+var calculator: CGFloat = 175
 
 struct ProgressBar: View {
     var progress: CGFloat
@@ -26,7 +27,8 @@ struct ProgressBar: View {
 }
 
 struct ProgressBar_Previews: PreviewProvider {
+    
     static var previews: some View {
-        ProgressBar(progress: 100)
+        ProgressBar(progress: 175)
     }
 }

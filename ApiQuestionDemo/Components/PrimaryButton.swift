@@ -13,13 +13,9 @@ struct PrimaryButton: View {
     
     var body: some View {
         Text(text)
+            .frame(width: 250, height: 25, alignment: .center)
             .foregroundColor(.white)
             .padding()
-            .padding(.horizontal)
-            .padding(.horizontal)
-            .padding(.horizontal)
-            .padding(.horizontal)
-            .padding(.horizontal)
             .background(background)
             .cornerRadius(30)
             .shadow(radius: 10)
