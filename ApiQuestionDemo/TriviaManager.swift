@@ -27,14 +27,10 @@ class TriviaManager: ObservableObject {
     
     func fetchTrivia() async {
         guard let url = URL(string: "https://opentdb.com/api.php?amount=10") else { fatalError("Missing URL") }
-        
         let urlRequest = URLRequest(url: url)
-        
         do {
             let (data, response) = try await URLSession.shared.data(for: urlRequest)
-            
             guard (response as? HTTPURLResponse)?.statusCode == 200 else { fatalError("Error while fetching data") }
-            
             let decoder = JSONDecoder()
             //decoder.keyDecodingStrategy = .convertFromSnakeCase
             let decodedData = try decoder.decode(Trivia.self, from: data)
@@ -44,29 +40,25 @@ class TriviaManager: ObservableObject {
                 self.score = 0
                 self.progress = 0.00
                 self.reachedEnd = false
-                
                 self.trivia = decodedData.results
                 self.length = self.trivia.count
                 //next question
                 self.setQuestion()
             }
-            
         } catch {
             print("Error fetching trivia: \(error)")
         }
     }
-    
-    
-        
-        func goToNextQuestion() {
-            if index + 1 < length {
-                index += 1
-                //go to next
-                setQuestion()
-            } else {
-                reachedEnd = true
-            }
+
+    func goToNextQuestion() {
+        if index + 1 < length {
+            index += 1
+            //go to next
+            setQuestion()
+        } else {
+            reachedEnd = true
         }
+    }
     
     func setQuestion() {
         answerSelected = false
@@ -85,5 +77,4 @@ class TriviaManager: ObservableObject {
             score += 1
         }
     }
-    
 }
